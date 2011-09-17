@@ -2,7 +2,7 @@
 
 namespace mageekguy\atoum;
 
-require_once dirname(__FILE__) . '/../lib/vendor/atoum/classes/autoloader.php';
+require_once dirname(__FILE__) . '/../vendor/atoum/classes/autoloader.php';
 require_once dirname(__FILE__). '/../classes/scripts/runner.class.php';
 
 use
