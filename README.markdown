@@ -8,5 +8,16 @@ Install sfAtoumPlugin as a git submodule
 
 Get atoum bundle with the plugin
 
-  cd plugins/sfAtoumPlugin
-  git submodule update --init
+  cd plugins/sfAtoumPlugin && git submodule update --init && cd ../../
+
+
+##Launch tests
+
+  php symfony  atoum:test
+
+
+##Atoum
+
+Atoum repository and documentation is available here : 
+
+https://github.com/mageekguy/atoum
