@@ -55,6 +55,14 @@ Options:
 
 ```
 
+##Write tests
+
+tests must include the bootstrap
+
+``` php
+require_once __DIR__ . '/../../../../plugins/sfAtoumPlugin/bootstrap/unit.php';
+```
+
 ##Atoum
 
 Atoum repository and documentation are available here : 
