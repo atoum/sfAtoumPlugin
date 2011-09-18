@@ -4,7 +4,7 @@ namespace mageekguy\atoum;
 
 require_once dirname(__FILE__) . '/../vendor/atoum/classes/autoloader.php';
 require_once dirname(__FILE__). '/../classes/scripts/runner.php';
-require_once dirname(__FILE__). '/../classes/script/arguments/parser.php';
+require_once dirname(__FILE__). '/../wrapper/arguments.php';
 
 use
   mageekguy\atoum,
@@ -43,21 +43,22 @@ EOF;
       define(__NAMESPACE__ . '\autorun', true);
 
       /**
-       *
-       * We need to do that because we can't injet an argumentParser to the autorun method
-       * so, we have to set the runner because it won't be accesible if we do that in a config file :
-       *  atoum\scripts\runner::getAutorunner()
-      */
+       * The setAutorunner is here in case of the is a getAutorunner in the
+       * config file.
+       */
 
       $runner = new scripts\runner(__FILE__);
-      $parser = new \sfAtoumPlugin\script\arguments\parser($arguments, $options);
-      $parser->setPhpCli(\sfToolkit::getPhpCli());
 
-      $runner->setArgumentsParser($parser);
+      $defaultValues = array(
+        'php'              => \sfToolkit::getPhpCli(),
+        'test-file-or-dir' => \sfConfig::get('sf_test_dir') . '/unit/',
+      );
+
+      $parser = new \sfAtoumPlugin\wrapper\arguments($defaultValues);
 
       \sfAtoumPlugin\scripts\runner::setAutorunner($runner);
 
-      $runner->run();
+      $runner->run($parser->getArguments($arguments, $options));
     }
 
   }
