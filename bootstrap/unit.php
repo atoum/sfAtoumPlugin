@@ -14,6 +14,6 @@ $autoload->loadConfiguration(sfFinder::type('file')->name('autoload.yml')->in(ar
 )));
 $autoload->register();
 
-require_once dirname(__FILE__) . '/../lib/vendor/atoum/classes/autoloader.php';
+require_once dirname(__FILE__) . '/../../../lib/vendor/atoum/classes/autoloader.php';
 
 
