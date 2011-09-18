@@ -3,7 +3,8 @@
 namespace mageekguy\atoum;
 
 require_once dirname(__FILE__) . '/../vendor/atoum/classes/autoloader.php';
-require_once dirname(__FILE__). '/../classes/scripts/runner.class.php';
+require_once dirname(__FILE__). '/../classes/scripts/runner.php';
+require_once dirname(__FILE__). '/../classes/script/arguments/parser.php';
 
 use
   mageekguy\atoum,
@@ -50,7 +51,7 @@ EOF;
 
       $runner = new scripts\runner(__FILE__);
 
-      $runner->setArgumentsParser(new \sfTaskParser($this, $arguments, $options));
+      $runner->setArgumentsParser(new \sfAtoumPlugin\script\arguments\parser($arguments, $options));
 
       \sfAtoumPlugin\scripts\runner::setAutorunner($runner);
 
