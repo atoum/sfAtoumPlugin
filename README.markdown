@@ -2,13 +2,14 @@
 
 ##Install
 
+Install atoum as a submodule
+
+`git submodule add git://github.com/mageekguy/atoum.git lib/vendor/atoum`
+
+
 Install sfAtoumPlugin as a git submodule
 
 `git submodule add git://github.com/agallou/sfAtoumPlugin.git plugins/sfAtoumPlugin`
-
-Get atoum bundle with the plugin
-
-`cd plugins/sfAtoumPlugin && git submodule update --init && cd ../../`
 
 
 Add the plugin in your ProjectConfiguration file
