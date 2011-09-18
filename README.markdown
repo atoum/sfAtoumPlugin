@@ -32,6 +32,28 @@ via the -c option :
 `php symfony atoum:test -c config/atoum/hudson.php`
 
 
+
+All atoum options are available :
+
+```
+ ./symfony help atoum:test
+Usage:
+ symfony atoum:test [-c|--configuration-file[="..."]] [-p|--php[="..."]] [-d|--default-report-title[="..."]] [-s|--score-file[="..."]] [-m|--max-children-number[="..."]] [-n|--no-code-coverage] [--test-it] [test-file-or-dir1] ... [test-file-or-dirN]
+
+Arguments:
+ test-file-or-dir        path to test files or folders
+
+Options:
+ --configuration-file    (-c) config file
+ --php                   (-p) path to php binary
+ --default-report-title  (-d) Define default report title
+ --score-file            (-s) Save score in <file>
+ --max-children-number   (-m) Maximum number of sub-processus which will be run simultaneously
+ --no-code-coverage      (-n) disable code coverage
+ --test-it               execute all atoum unit tests
+
+```
+
 ##Atoum
 
 Atoum repository and documentation is available here : 
