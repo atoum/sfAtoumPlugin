@@ -11,8 +11,8 @@ class sfTaskParser extends mageekguy\atoum\script\arguments\parser
 
   public function __construct(sfTask $task, $arguments = array(), $options = array())
   {
-    $this->task           = $task;
-    $this->options      = $options;
+    $this->task      = $task;
+    $this->options   = $options;
     $this->arguments = $arguments;
 
     parent::__construct();
@@ -21,8 +21,7 @@ class sfTaskParser extends mageekguy\atoum\script\arguments\parser
   public function parse(array $array = null)
   {
     $this->resetValues();
-    
-    
+
     if (null !== $this->options['configuration-file'])
     {
       $this->values['-c'] = array($this->options['configuration-file']);
@@ -33,7 +32,49 @@ class sfTaskParser extends mageekguy\atoum\script\arguments\parser
       $this->values['-ncc'] = array();
     }
 
-    $this->values['-d'] = array(sfConfig::get('sf_test_dir') . '/unit/');
+    if ($this->options['test-it'])
+    {
+      $this->values['--testIt'] = array();
+    }
+
+    if (null !== $drt = $this->options['default-report-title'])
+    {
+      $this->values['-drt'] = array($drt);
+    }
+
+    if (null !== $sf = $this->options['score-file'])
+    {
+      $this->values['--score-file'] = array($sf);
+    }
+
+    if (null !== $mcn = $this->options['max-children-number'])
+    {
+      $this->values['--max-children-number'] = array($mcn);
+    }
+
+    //TODO exception if test-it and dir or file passed
+
+    if (!$this->options['test-it'])
+    {
+      if (!count($this->arguments['test-file-or-dir']))
+      {
+        $this->values['-d'] = array(sfConfig::get('sf_test_dir') . '/unit/');
+      }
+      else
+      {
+        foreach ($this->arguments['test-file-or-dir'] as $testOrDir)
+        {
+          $key = (is_dir($testOrDir)) ? '-d' : '-t';
+          if (!isset($this->values[$key]))
+          {
+            $this->values[$key] = array();
+          }
+          $this->values[$key][] = $testOrDir;
+        }
+
+      }
+    }
+    
     $this->values['-p'] = array((null === $this->options['php']) ? sfToolkit::getPhpCli() : $this->options['php']);
     
     $this->triggerHandlers();
@@ -41,7 +82,7 @@ class sfTaskParser extends mageekguy\atoum\script\arguments\parser
     return $this;
   }
 
-  protected  function triggerHandlers()
+  protected function triggerHandlers()
   {
     foreach ($this->values as $argument => $values)
     {
