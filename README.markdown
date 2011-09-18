@@ -56,6 +56,6 @@ Options:
 
 ##Atoum
 
-Atoum repository and documentation is available here : 
+Atoum repository and documentation are available here : 
 
 https://github.com/mageekguy/atoum
