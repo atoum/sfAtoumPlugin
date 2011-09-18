@@ -22,8 +22,8 @@ class atoumTestTask extends \sfBaseTask
 EOF;
     $this->addOption('configuration-file', 'c', \sfCommandOption::PARAMETER_OPTIONAL, 'config file');
     $this->addOption('php', 'p', \sfCommandOption::PARAMETER_OPTIONAL, 'path to php binary');
+    $this->addOption('no-code-coverage', 'n', \sfCommandOption::PARAMETER_NONE, 'disable code coverage');
     //TODO
-    //-ncc, --no-code-coverage' => $this->locale->_('Disable code coverage')
     //-mcn, --max-children-number <integer>' => $this->locale->_('Maximum number of sub-processus which will be run simultaneously')
     //-sf <file>, --score-file <file>' => $this->locale->_('Save score in <file>')
     //-t <files>, --test-files <files>' => $this->locale->_('Use test files'),$

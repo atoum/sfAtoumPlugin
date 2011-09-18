@@ -28,6 +28,11 @@ class sfTaskParser extends mageekguy\atoum\script\arguments\parser
       $this->values['-c'] = array($this->options['configuration-file']);
     }
 
+    if ($this->options['no-code-coverage'])
+    {
+      $this->values['-ncc'] = array();
+    }
+
     $this->values['-d'] = array(sfConfig::get('sf_test_dir') . '/unit/');
     $this->values['-p'] = array((null === $this->options['php']) ? sfToolkit::getPhpCli() : $this->options['php']);
     
