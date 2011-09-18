@@ -1,3 +1,0 @@
-[submodule "lib/vendor/atoum"]
-	path = lib/vendor/atoum
-	url = git://github.com/mageekguy/atoum.git
