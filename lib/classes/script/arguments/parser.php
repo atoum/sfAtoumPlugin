@@ -10,12 +10,26 @@ class parser extends \mageekguy\atoum\script\arguments\parser
   protected $options;
   protected $arguments;
 
+  protected $phpCli = null;
+
   public function __construct($arguments = array(), $options = array())
   {
     $this->options   = $options;
     $this->arguments = $arguments;
 
     parent::__construct();
+  }
+
+  public function setPhpCli($phpCli)
+  {
+    $this->phpCli = $phpCli;
+
+    return $this;
+  }
+
+  public function getPhpCli()
+  {
+    return $this->phpCli;
   }
 
   public function parse(array $array = null)
@@ -31,12 +45,12 @@ class parser extends \mageekguy\atoum\script\arguments\parser
 
   public function addValues(array $values, $arguments = array(), $options = array())
   {
-    if (null !== $this->options['configuration-file'])
+    if (null !== $options['configuration-file'])
     {
-      $values['-c'] = array($this->options['configuration-file']);
+      $values['-c'] = array($options['configuration-file']);
     }
 
-    if ($this->options['no-code-coverage'])
+    if ($options['no-code-coverage'])
     {
       $values['-ncc'] = array();
     }
@@ -84,7 +98,7 @@ class parser extends \mageekguy\atoum\script\arguments\parser
       }
     }
 
-    $values['-p'] = array((null === $options['php']) ? \sfToolkit::getPhpCli() : $options['php']);
+    $values['-p'] = array((null === $options['php']) ? $this->getPhpCli() : $options['php']);
 
     return $values;
   }

@@ -50,8 +50,10 @@ EOF;
       */
 
       $runner = new scripts\runner(__FILE__);
+      $parser = new \sfAtoumPlugin\script\arguments\parser($arguments, $options);
+      $parser->setPhpCli(\sfToolkit::getPhpCli());
 
-      $runner->setArgumentsParser(new \sfAtoumPlugin\script\arguments\parser($arguments, $options));
+      $runner->setArgumentsParser($parser);
 
       \sfAtoumPlugin\scripts\runner::setAutorunner($runner);
 
