@@ -3,7 +3,6 @@
 namespace mageekguy\atoum;
 
 require_once dirname(__FILE__) . '/../../../../lib/vendor/atoum/classes/autoloader.php';
-require_once dirname(__FILE__). '/../classes/scripts/runner.php';
 require_once dirname(__FILE__). '/../wrapper/arguments.php';
 
 use
@@ -14,6 +13,10 @@ use
 
 class atoumTestTask extends \sfBaseTask
 {
+
+  /**
+   * @return void
+   */
   protected function configure()
   {
     $this->namespace           = 'atoum';
@@ -31,6 +34,14 @@ EOF;
     $this->addArgument('test-file-or-dir', \sfCommandArgument::OPTIONAL | \sfCommandArgument::IS_ARRAY, 'path to test files or folders');
   }
 
+
+  /**
+   *
+   * @param array $arguments
+   * @param array $options
+   *
+   * @return void
+   */
   protected function execute($arguments = array(), $options = array())
   {
     if (defined(__NAMESPACE__ . '\running') === false)
@@ -42,25 +53,24 @@ EOF;
     {
       define(__NAMESPACE__ . '\autorun', true);
 
-      /**
-       * The setAutorunner is here in case of the is a getAutorunner in the
-       * config file.
-       */
+      $parser = new \sfAtoumPlugin\wrapper\arguments($this->getDefaultArguments());
 
       $runner = new scripts\runner(__FILE__);
-
-      $defaultValues = array(
-        'php'              => \sfToolkit::getPhpCli(),
-        'test-file-or-dir' => \sfConfig::get('sf_test_dir') . '/unit/',
-      );
-
-      $parser = new \sfAtoumPlugin\wrapper\arguments($defaultValues);
-
-      \sfAtoumPlugin\scripts\runner::setAutorunner($runner);
-
-      $runner->run($parser->getArguments($arguments, $options));
+      $runner->setArguments($parser->getArguments($arguments, $options));
+      $runner->run();
     }
 
+  }
+
+  /**
+   * @return array
+   */
+  protected function getDefaultArguments()
+  {
+    return array(
+      'php'              => \sfToolkit::getPhpCli(),
+      'test-file-or-dir' => \sfConfig::get('sf_test_dir') . '/unit/',
+    );
   }
 
 }
