@@ -3,7 +3,8 @@
 namespace mageekguy\atoum;
 
 require_once dirname(__FILE__) . '/../../../../lib/vendor/atoum/classes/autoloader.php';
-require_once dirname(__FILE__). '/../wrapper/arguments.php';
+require_once dirname(__FILE__). '/../arguments/parser.php';
+require_once dirname(__FILE__). '/../arguments/builder.php';
 
 use
   mageekguy\atoum,
@@ -24,14 +25,14 @@ class atoumTestTask extends \sfBaseTask
     $this->briefDescription    = '';
     $this->detailedDescription = <<<EOF
 EOF;
-    $this->addOption('configuration-file', 'c', \sfCommandOption::PARAMETER_OPTIONAL, 'config file');
-    $this->addOption('php', 'p', \sfCommandOption::PARAMETER_OPTIONAL, 'path to php binary');
-    $this->addOption('default-report-title', 'd', \sfCommandOption::PARAMETER_OPTIONAL, 'Define default report title');
-    $this->addOption('score-file', 's', \sfCommandOption::PARAMETER_OPTIONAL, 'Save score in <file>');
-    $this->addOption('max-children-number', 'm', \sfCommandOption::PARAMETER_OPTIONAL, 'Maximum number of sub-processus which will be run simultaneously');
-    $this->addOption('no-code-coverage', 'n', \sfCommandOption::PARAMETER_NONE, 'disable code coverage');
-    $this->addOption('test-it', null, \sfCommandOption::PARAMETER_NONE, 'execute all atoum unit tests');
-    $this->addArgument('test-file-or-dir', \sfCommandArgument::OPTIONAL | \sfCommandArgument::IS_ARRAY, 'path to test files or folders');
+
+    $runner  = new scripts\runner(__FILE__);
+    $builder = new \sfAtoumPlugin\arguments\builder($runner->getHelp());
+    $builder
+      ->setDefaultTypes($this->getDefaultTypes())
+      ->setDefaultOptions($this->getDefaultArguments())
+    ;
+    $this->addOptions($builder->getSfOptions());
   }
 
 
@@ -53,14 +54,37 @@ EOF;
     {
       define(__NAMESPACE__ . '\autorun', true);
 
-      $parser = new \sfAtoumPlugin\wrapper\arguments($this->getDefaultArguments());
+      $commandManager = new \sfCommandManager();
+      $commandManager->getArgumentSet()->addArguments($this->getArguments());
+      $commandManager->getOptionSet()->addOptions($this->getOptions());
+       
+      $options = $this->processOptions($options);
 
+      $parser = new \sfAtoumPlugin\arguments\parser($commandManager);
       $runner = new scripts\runner(__FILE__);
-      $runner->setArguments($parser->getArguments($arguments, $options));
+      $runner->setArguments($parser->toAtoumArguments($arguments, $options));
       $runner->run();
     }
 
   }
+
+   /**
+    * @param array $options
+    * 
+    * @return array
+    */
+   protected function processOptions($options)
+   {
+     if (isset($option['testIt']) && $option['testIt'])
+     {
+       $options['directories'] = array();
+     }
+     if (count($options['directories']) > 1)
+     {
+       array_shift($options['directories']);
+     }
+     return $options;
+   }
 
   /**
    * @return array
@@ -68,9 +92,20 @@ EOF;
   protected function getDefaultArguments()
   {
     return array(
-      'php'              => \sfToolkit::getPhpCli(),
-      'test-file-or-dir' => \sfConfig::get('sf_test_dir') . '/unit/',
+      'php'              => array(\sfToolkit::getPhpCli()),
+      'directories' 		 => array(\sfConfig::get('sf_test_dir') . '/unit/'),
     );
   }
+
+   /**
+    * @return array
+    */
+   public function getDefaultTypes()
+   {
+     return array(
+       'no-code-coverage' => \sfCommandOption::PARAMETER_NONE,
+      'testIt'            => \sfCommandOption::PARAMETER_NONE,
+     );
+   }
 
 }
