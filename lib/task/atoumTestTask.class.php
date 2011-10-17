@@ -75,11 +75,11 @@ EOF;
     */
    protected function processOptions($options)
    {
-     if (isset($option['testIt']) && $option['testIt'])
+     if ((isset($options['testIt']) && $options['testIt']))
      {
        $options['directories'] = array();
      }
-     if (count($options['directories']) > 1)
+     if (count($options['directories']) > 1 || count($options['test-files']))
      {
        array_shift($options['directories']);
      }
