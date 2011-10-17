@@ -14,6 +14,14 @@ $autoload->loadConfiguration(sfFinder::type('file')->name('autoload.yml')->in(ar
 )));
 $autoload->register();
 
-require_once dirname(__FILE__) . '/../../../lib/vendor/atoum/classes/autoloader.php';
+if (defined('\mageekguy\atoum\running') === false)
+{
+  require_once dirname(__FILE__) . '/../../../lib/vendor/atoum/classes/autoloader.php';
+}
 
+if (defined('mageekguy\atoum\autorun') === false)
+{
+  define('mageekguy\atoum\autorun', true);
+  \mageekguy\atoum\scripts\runner::autorun('runner');
+}
 
