@@ -47,7 +47,7 @@ EOF;
   {
     if (defined(__NAMESPACE__ . '\running') === false)
     {
-      require_once __DIR__ . '/../classes/autoloader.php';
+      require_once \sfConfig::get('sf_lib_dir') . '/vendor/atoum/classes/autoloader.php';
     }
  
     if (defined(__NAMESPACE__ . '\autorun') === false)
@@ -61,7 +61,10 @@ EOF;
       $options = $this->processOptions($options);
 
       $parser = new \sfAtoumPlugin\arguments\parser($commandManager);
-      $runner = new scripts\runner(__FILE__);
+
+      $runnerPath = \sfConfig::get('sf_lib_dir'). '/vendor/atoum/scripts/runner.php';
+
+      $runner = new \mageekguy\atoum\scripts\runner($runnerPath);
       $runner->setArguments($parser->toAtoumArguments($arguments, $options));
       $runner->run();
     }
@@ -105,6 +108,7 @@ EOF;
      return array(
        'no-code-coverage' => \sfCommandOption::PARAMETER_NONE,
       'testIt'            => \sfCommandOption::PARAMETER_NONE,
+      'loop'              => \sfCommandOption::PARAMETER_NONE,
      );
    }
 
