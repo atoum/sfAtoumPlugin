@@ -49,7 +49,7 @@ EOF;
     {
       require_once \sfConfig::get('sf_lib_dir') . '/vendor/atoum/classes/autoloader.php';
     }
- 
+
     if (defined(__NAMESPACE__ . '\autorun') === false)
     {
       define(__NAMESPACE__ . '\autorun', true);
@@ -57,7 +57,7 @@ EOF;
       $commandManager = new \sfCommandManager();
       $commandManager->getArgumentSet()->addArguments($this->getArguments());
       $commandManager->getOptionSet()->addOptions($this->getOptions());
-       
+
       $options = $this->processOptions($options);
 
       $parser = new \sfAtoumPlugin\arguments\parser($commandManager);
@@ -67,13 +67,15 @@ EOF;
       $runner = new \mageekguy\atoum\scripts\runner($runnerPath);
       $runner->setArguments($parser->toAtoumArguments($arguments, $options));
       $runner->run();
+      $score = $runner->getRunner()->getScore();
+      return $score->getFailNumber() <= 0 && $score->getErrorNumber() <= 0 && $score->getExceptionNumber() <= 0 ? 0 : 1;
     }
 
   }
 
    /**
     * @param array $options
-    * 
+    *
     * @return array
     */
    protected function processOptions($options)
