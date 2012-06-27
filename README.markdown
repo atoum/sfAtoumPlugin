@@ -4,7 +4,7 @@
 
 ### Using composer
 
-Add this to you dependancies in your composer.json : 
+Add this to you dependancies in your composer.json ([example](https://gist.github.com/3006430)) : 
 
 ```
   "require"     : {
