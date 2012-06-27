@@ -2,6 +2,7 @@
   "name"   : "atoum/sfAtoumPlugin",
   "type"   : "symfony1-plugin",
   "require": {
-    "mageekguy/atoum": "*"
+    "mageekguy/atoum": "*",
+    "composer/installers": "*"
   }
 }
