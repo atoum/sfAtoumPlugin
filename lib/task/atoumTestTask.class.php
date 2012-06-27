@@ -2,9 +2,8 @@
 
 namespace mageekguy\atoum;
 
-require_once dirname(__FILE__) . '/../../../../lib/vendor/atoum/classes/autoloader.php';
-require_once dirname(__FILE__). '/../arguments/parser.php';
-require_once dirname(__FILE__). '/../arguments/builder.php';
+require_once dirname(__FILE__) . '/../arguments/parser.php';
+require_once dirname(__FILE__) . '/../arguments/builder.php';
 
 use
   mageekguy\atoum,
@@ -20,6 +19,14 @@ class atoumTestTask extends \sfBaseTask
    */
   protected function configure()
   {
+    if (null === $atoumPath = \sfConfig::get('sf_atoum_path'))
+    {
+      $atoumPath = dirname(__FILE__) . '/../../../../lib/vendor/atoum/';
+    }
+
+    require_once $atoumPath . '/classes/autoloader.php';
+
+
     $this->namespace           = 'atoum';
     $this->name                = 'test';
     $this->briefDescription    = '';
@@ -45,9 +52,14 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
+    if (null === $atoumPath = \sfConfig::get('sf_atoum_path'))
+    {
+      $atoumPath = dirname(__FILE__) . '/../../../lib/vendor/atoum/';
+    }
+
     if (defined(__NAMESPACE__ . '\running') === false)
     {
-      require_once \sfConfig::get('sf_lib_dir') . '/vendor/atoum/classes/autoloader.php';
+      require_once $atoumPath . '/classes/autoloader.php';
     }
 
     if (defined(__NAMESPACE__ . '\autorun') === false)
@@ -62,7 +74,7 @@ EOF;
 
       $parser = new \sfAtoumPlugin\arguments\parser($commandManager);
 
-      $runnerPath = \sfConfig::get('sf_lib_dir'). '/vendor/atoum/scripts/runner.php';
+      $runnerPath = $atoumPath . '/scripts/runner.php';
 
       $runner = new \mageekguy\atoum\scripts\runner($runnerPath);
       $runner->setArguments($parser->toAtoumArguments($arguments, $options));

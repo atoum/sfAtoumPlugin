@@ -16,7 +16,11 @@ $autoload->register();
 
 if (defined('\mageekguy\atoum\running') === false)
 {
-  require_once dirname(__FILE__) . '/../../../lib/vendor/atoum/classes/autoloader.php';
+  if (null === $atoumPath = sfConfig::get('sf_atoum_path'))
+  {
+    $atoumPath = dirname(__FILE__) . '/../../../lib/vendor/atoum/';
+  }
+  require_once $atoumPath . '/classes/autoloader.php';
 }
 
 if (defined('mageekguy\atoum\autorun') === false)
