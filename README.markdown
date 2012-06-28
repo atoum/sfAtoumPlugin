@@ -4,7 +4,7 @@
 
 ### Using composer
 
-Add this to you dependancies in your composer.json ([example](https://gist.github.com/3006430)) : 
+Add this to you dependencies in your composer.json ([example](https://gist.github.com/3006430)) : 
 
 ```
   "require"     : {
@@ -12,7 +12,7 @@ Add this to you dependancies in your composer.json ([example](https://gist.githu
   },
 ```
 
-Afer a 
+After a 
 
 `php composer.phar update`
 
