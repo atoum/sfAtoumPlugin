@@ -26,6 +26,5 @@ if (defined('\mageekguy\atoum\running') === false)
 if (defined('mageekguy\atoum\autorun') === false)
 {
   define('mageekguy\atoum\autorun', true);
-  \mageekguy\atoum\scripts\runner::autorun('runner');
 }
 

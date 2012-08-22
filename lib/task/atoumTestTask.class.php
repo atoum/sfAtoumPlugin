@@ -96,7 +96,7 @@ EOF;
      {
        $options['directories'] = array();
      }
-     if (count($options['directories']) > 1 || count($options['test-files']))
+     if (count($options['directories']) > 1 || count($options['files']))
      {
        array_shift($options['directories']);
      }
