@@ -68,20 +68,37 @@ All atoum options are available :
 
 ```
  ./symfony help atoum:test
+
 Usage:
- symfony atoum:test [-c|--configuration-file[="..."]] [-p|--php[="..."]] [-d|--default-report-title[="..."]] [-s|--score-file[="..."]] [-m|--max-children-number[="..."]] [-n|--no-code-coverage] [--test-it] [test-file-or-dir1] ... [test-file-or-dirN]
+ symfony atoum:test [-p|--php[="..."]] [--default-report-title[="..."]] [-c|--configurations[="..."]] [--score-file[="..."]] [--max-children-number[="..."]] [--no-code-coverage] [--no-code-coverage-in-directories[="..."]] [--no-code-coverage-for-namespaces[="..."]] [--no-code-coverage-for-classes[="..."]] [-f|--files[="..."]] [-d|--directories[="..."]] [--test-file-extensions[="..."]] [-g|--glob[="..."]] [--tags[="..."]] [-m|--methods[="..."]] [--namespaces[="..."]] [-l|--loop] [--test-it[="..."]] [--test-all[="..."]] [--force-terminal[="..."]] [--bootstrap-file[="..."]] [--use-light-report[="..."]] [--debug[="..."]]
 
 Arguments:
  test-file-or-dir        path to test files or folders
 
 Options:
- --configuration-file    (-c) config file
- --php                   (-p) path to php binary
- --default-report-title  (-d) Define default report title
- --score-file            (-s) Save score in <file>
- --max-children-number   (-m) Maximum number of sub-processus which will be run simultaneously
- --no-code-coverage      (-n) disable code coverage
- --test-it               execute all atoum unit tests
+ --php                              (-p) Path to PHP binary which must be used to run tests (default: Array(    [0] => /usr/bin/php5)) (multiple values allowed)
+ --default-report-title             Define default report title with <string> (multiple values allowed)
+ --configurations                   (-c) Use all configuration files <file> (multiple values allowed)
+ --score-file                       Save score in file <file> (multiple values allowed)
+ --max-children-number              Maximum number of sub-processus which will be run simultaneously (multiple values allowed)
+ --no-code-coverage                 Disable code coverage
+ --no-code-coverage-in-directories  Disable code coverage in directories <directory> (multiple values allowed)
+ --no-code-coverage-for-namespaces  Disable code coverage for namespaces <namespace> (multiple values allowed)
+ --no-code-coverage-for-classes     Disable code coverage for classes <class> (multiple values allowed)
+ --files                            (-f) Execute all unit test files <file> (multiple values allowed)
+ --directories                      (-d) Execute unit test files in all <directory> (default: Array(    [0] => /var/www/ereservation/test/unit/)) (multiple values allowed)
+ --test-file-extensions             Execute unit test files with one of extensions <extension> (multiple values allowed)
+ --glob                             (-g) Execute unit test files which match <pattern> (multiple values allowed)
+ --tags                             Execute only unit test with tags <tag> (multiple values allowed)
+ --methods                          (-m) Execute all <class::method>, * may be used as wildcard for class name or method name (multiple values allowed)
+ --namespaces                       Execute all classes in all namespaces <namespace> (multiple values allowed)
+ --loop                             (-l) Execute tests in an infinite loop
+ --test-it                          Execute atoum unit tests (multiple values allowed)
+ --test-all                         Execute unit tests in directories defined via $script->addTestAllDirectory('path/to/directory') in a configuration file (multiple values allowed)
+ --force-terminal                   Force output as in terminal (multiple values allowed)
+ --bootstrap-file                   Include <file> before executing each test method (multiple values allowed)
+ --use-light-report                 Use "light" CLI report (multiple values allowed)
+ --debug                            Enable debug mode (multiple values allowed)
 
 ```
 
